@@ -9,6 +9,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import MapScreen from './screens/MapScreen';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { GOOGLE_MAPS_API_KEY } from "@env";
+import EatsScreen from './screens/EatsScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -29,6 +30,13 @@ export default function App() {
             <Stack.Screen
               name="MapScreen"
               component={MapScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="EatsScreen"
+              component={EatsScreen}
               options={{
                 headerShown: false,
               }}

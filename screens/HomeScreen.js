@@ -6,6 +6,7 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 import { GOOGLE_MAPS_API_KEY } from "@env";
 import { useDispatch } from 'react-redux';
 import { setDestination, setOrigin } from '../slices/navSlice';
+import NavFavourites from '../components/NavFavourites';
 
 const HomeScreen = () => {
 
@@ -26,39 +27,42 @@ const HomeScreen = () => {
                     uri: 'https://links.papareact.com/gzs',
                 }}
             />
+
+            <GooglePlacesAutocomplete
+                placeholder="Where From?"
+                styles={{
+                    container: {
+                        flex: 0,
+                    },
+                    textInput: {
+                        fontSize: 18,
+                    },
+                }}
+                onPress={(data, details = null) => {
+                    dispatch(setOrigin({
+                        location: details.geometry.location,
+                        description: data.description
+                    }));
+
+                    console.log("location", details.geometry.location); // location {"lat": 51.5072178, "lng": -0.1275862}
+                    console.log("description", data.description); // description London, UK
+
+                    dispatch(setDestination(null));
+                }}
+                fetchDetails={true}
+                returnKeyType={"search"}
+                enablePoweredByContainer={false}
+                minLength={2}
+                query={{
+                    key: GOOGLE_MAPS_API_KEY,
+                    language: "en",
+                }}
+                nearbyPlacesAPI="GooglePlacesSearch"
+                debounce={400}
+            />
+            <NavOptions/>
+            <NavFavourites/>
         </View>
-
-        <GooglePlacesAutocomplete
-            placeholder="Where From?"
-            styles={{
-                container: {
-                    flex: 0,
-                },
-                textInput: {
-                    fontSize: 18,
-                },
-            }}
-            onPress={(data, details = null) => {
-                dispatch(setOrigin({
-                    location: details.geometry.location,
-                    description: data.description
-                }));
-
-                dispatch(setDestination(null));
-                // console.log(data, details)
-            }}
-            fetchDetails={true}
-            returnKeyType={"search"}
-            enablePoweredByContainer={false}
-            minLength={2}
-            query={{
-                key: GOOGLE_MAPS_API_KEY,
-                language: "en",
-            }}
-            nearbyPlacesAPI="GooglePlacesSearch"
-            debounce={400}
-        />
-        <NavOptions/>
     </SafeAreaView>
   )
 }
