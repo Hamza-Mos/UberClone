@@ -44,8 +44,8 @@ const HomeScreen = () => {
                         description: data.description
                     }));
 
-                    console.log("location", details.geometry.location); // location {"lat": 51.5072178, "lng": -0.1275862}
-                    console.log("description", data.description); // description London, UK
+                    // console.log("location", details.geometry.location); // location {"lat": 51.5072178, "lng": -0.1275862}
+                    // console.log("description", data.description); // description London, UK
 
                     dispatch(setDestination(null));
                 }}
